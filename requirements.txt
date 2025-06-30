@@ -1,0 +1,18 @@
+# Environment and async
+python-dotenv
+asyncio
+
+# LangChain ecosystem
+langchain
+langgraph
+langchain-core
+langchain-openai
+langchain-community
+langchain-mcp-adapters
+
+# Vector storage and embeddings
+groq # Required for OpenAI token counting
+openai    # Required if you're directly calling OpenAI APIs
+
+# Typing and Dev
+typing-extensions

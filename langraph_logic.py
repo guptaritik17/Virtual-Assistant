@@ -4,8 +4,6 @@ import json
 import re
 from typing import Annotated, Sequence, List, TypedDict, Literal
 from dotenv import load_dotenv
-from pydantic import BaseModel, ValidationError
-from cerberus import Validator
 
 from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import ToolNode 
@@ -25,27 +23,6 @@ class AgentState(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add_messages]
     user_state: dict
     action: Literal["recommend", "clarify", "end"]
-
-# ---------------------- Pydantic Preferences Model ----------------------
-class Preferences(BaseModel):
-    budget: str | None = None
-    use_case: str | None = None
-    category: str | None = None
-    brand_preferences: list[str] = []
-    important_features: list[str] = []
-    excluded_features: list[str] = []
-
-# ---------------------- Cerberus Schema ----------------------
-schema = {
-    "budget": {"type": "string", "nullable": True},
-    "use_case": {"type": "string", "nullable": True},
-    "category": {"type": "string", "nullable": True},
-    "brand_preferences": {"type": "list", "schema": {"type": "string"}},
-    "important_features": {"type": "list", "schema": {"type": "string"}},
-    "excluded_features": {"type": "list", "schema": {"type": "string"}},
-}
-validator = Validator(schema)
-
 # ---------------------- Dummy Tool (Optional) ----------------------
 @tool
 def search_products(category: str, budget: str, use_case: str, brand_preferences: List[str]) -> str:
